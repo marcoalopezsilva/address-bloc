@@ -9,9 +9,8 @@ class MenuController
     end
     
     def main_menu
-        #NL: Added next line
-        system "clear"
         puts "Main Menu - #{address_book.entries.count} entries"
+        puts "0 - View a specific entry, by number"
         puts "1 - View all entries"
         puts "2 - Create an entry"
         puts "3 - Search for an entry"
@@ -23,6 +22,17 @@ class MenuController
         puts "You picked #{selection}"
         
         case selection
+        when 0
+            if address_book.entries.length > 0
+                system "clear"
+                view_specific_entry
+                main_menu
+            else
+                system "clear"
+                puts "Address book is empty, select another option"
+                puts
+                main_menu
+            end
         when 1
             system "clear"
             view_all_entries
@@ -47,20 +57,35 @@ class MenuController
         else
             system "clear"
             puts "Sorry, that is not a valid input"
+            puts
             main_menu
         end
     end
 
+    def view_specific_entry
+        print "Enter the Entry number you want to view: "
+        select = gets.to_i
+        if select < address_book.entries.length
+            puts "Entry number #{select} ~> "
+            puts address_book.entries[select].to_s
+            puts
+        else
+            puts "Invalid entry number! There are #{address_book.entries.length} entries, with index numbers starting at 0. Please try again"
+            view_specific_entry
+        end
+    end 
+    
     def view_all_entries
         #NL: Iterates thru the contents of entries
         address_book.entries.each do |entry|
             system "clear"
             puts entry.to_s
-            #15
+            puts
             entry_submenu(entry)
         end
         system "clear"
         puts "End of entries"
+        puts
     end
     
     def create_entry
@@ -79,6 +104,7 @@ class MenuController
         
         system "clear"
         puts "New entry created"
+        puts
     end 
     
     def search_entries
