@@ -13,7 +13,7 @@ class AddressBook
         # index will store the insertion index
         index = 0
         entries.each do |entry|
-            #Next we find the appropriate point to insert the new entry (lexicographic order - check this with Wilson)
+            #Next we find the appropriate point to insert the new entry (lexicographic order: abc < bcd)
             if name < entry.name
                 break
             end 
