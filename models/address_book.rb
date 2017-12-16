@@ -1,5 +1,6 @@
 # Next line tells Ruby to load the library called entry.rb (expected to be at the same path, because it's relative)
 require_relative 'entry'
+require "csv"
     
 class AddressBook
     
@@ -34,4 +35,17 @@ class AddressBook
         entries.delete_at(index)
     end 
 
+    def import_from_csv(file_name)
+        #NL: Reads file_name and stores content in variable csv_text
+        csv_text = File.read(file_name)
+        #NL: Uses the CSV class and its parse method to parse the content. The result of CSV.parse is an object of the type CSV::table
+        csv = CSV.parse(csv_text, headers: true, skip_blanks: true)
+        csv.each do |row|
+            row_hash = row.to_hash
+            #NL: because row_hash is a hash (dictionary) we refer to its contents by the key (e.g. "name")
+            add_entry(row_hash["name"], row_hash["phone_number"], row_hash["email"])
+        end
+        
+    end
+    
 end
