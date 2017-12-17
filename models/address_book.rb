@@ -45,7 +45,28 @@ class AddressBook
             #NL: because row_hash is a hash (dictionary) we refer to its contents by the key (e.g. "name")
             add_entry(row_hash["name"], row_hash["phone_number"], row_hash["email"])
         end
-        
     end
+    
+    def binary_search(name)
+        #Sets the boundaries for a search loop
+        lower = 0
+        upper = entries.length - 1
+        #Search loop
+        while lower <= upper
+            #This divides the search space in two, so search is faster. Works only for sorted lists, arrays (etc). It's called binary search.
+            mid = (lower + upper) / 2
+            mid_name = entries[mid].name
+            #NL: Search is case-sensitive
+            if name == mid_name
+                return entries[mid]
+            #Narrows the search
+            elsif name < mid_name
+                upper = mid - 1
+            elsif name > mid_name
+                lower = mid + 1
+            end 
+        end
+        return nil
+    end 
     
 end
