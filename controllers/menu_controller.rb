@@ -10,29 +10,19 @@ class MenuController
     
     def main_menu
         puts "Main Menu - #{address_book.entries.count} entries"
-        puts "0 - View a specific entry, by number"
         puts "1 - View all entries"
         puts "2 - Create an entry"
         puts "3 - Search for an entry"
         puts "4 - Import entries from a CSV"
-        puts "5 - Exit"
+        puts "5 - View a specific entry, by number"
+        puts "6 - Blow up the address book"
+        puts "7 - Exit"
         print "Enter your selection: "
         # NL: "gets" reads the next line from the standard input
         selection = gets.to_i
         puts "You picked #{selection}"
         
         case selection
-        when 0
-            if address_book.entries.length > 0
-                system "clear"
-                view_specific_entry
-                main_menu
-            else
-                system "clear"
-                puts "Address book is empty, select another option"
-                puts
-                main_menu
-            end
         when 1
             system "clear"
             view_all_entries
@@ -50,10 +40,26 @@ class MenuController
             read_csv
             main_menu
         when 5
+            if address_book.entries.length > 0
+                system "clear"
+                view_specific_entry
+                main_menu
+            else
+                system "clear"
+                puts "Address book is empty, select another option"
+                puts
+                main_menu
+            end
+        when 6
+            system "clear"
+            address_book.entries = []
+            puts "The address book was emptied"
+            puts
+            main_menu
+        when 7
             puts "Good-bye!"
             #NL: Exits the program. 0 signals that we existed without an error
             exit(0)
-            #9
         else
             system "clear"
             puts "Sorry, that is not a valid input"
@@ -122,7 +128,7 @@ class MenuController
     
     def read_csv
         
-        print "Enter SCV file to import: "
+        print "Enter CSV file to import: "
         file_name = gets.chomp
         
         if file_name.empty?
