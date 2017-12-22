@@ -4,7 +4,7 @@ require "csv"
     
 class AddressBook
     
-    attr_accessor :entries
+    attr_reader :entries
     
     def initialize
         @entries = []
@@ -78,5 +78,8 @@ class AddressBook
         return nil
     end 
     
+    def nuke
+        @entries = []
+    end
     
 end

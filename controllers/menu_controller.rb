@@ -52,7 +52,7 @@ class MenuController
             end
         when 6
             system "clear"
-            address_book.entries = []
+            address_book.nuke
             puts "The address book was emptied"
             puts
             main_menu
